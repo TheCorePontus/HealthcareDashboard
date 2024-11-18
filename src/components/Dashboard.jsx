@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Upload, User, Save } from 'lucide-react';
 
 const Dashboard = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +6,9 @@ const Dashboard = () => {
     age: '',
     file: null
   });
+
+  
+  const ageOptions = Array.from({length: 101}, (_, i) => i);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +35,7 @@ const Dashboard = () => {
     }
 
     console.log('Submitted Data:', formData);
-    alert('Information submitted successfully!');
+    alert('Patient information submitted successfully!');
   };
 
   return (
@@ -46,7 +48,7 @@ const Dashboard = () => {
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex items-center border rounded-lg p-2">
-            <User className="text-blue-500 mr-3" />
+            <span className="text-blue-500 mr-3">👤</span>
             <input 
               type="text"
               name="name"
@@ -60,21 +62,24 @@ const Dashboard = () => {
           
           <div className="flex items-center border rounded-lg p-2">
             <span className="text-blue-500 mr-3">🎂</span>
-            <input 
-              type="number"
+            <select
               name="age"
-              placeholder="Patient Age"
               value={formData.age}
               onChange={handleInputChange}
-              min="0"
-              max="120"
               className="w-full focus:outline-none"
               required
-            />
+            >
+              <option value="">Select Age</option>
+              {ageOptions.map(age => (
+                <option key={age} value={age}>
+                  {age}
+                </option>
+              ))}
+            </select>
           </div>
           
           <div className="border rounded-lg p-2 flex items-center">
-            <Upload className="text-blue-500 mr-3" />
+            <span className="text-blue-500 mr-3">📄</span>
             <input 
               type="file"
               name="medicalFile"
@@ -85,9 +90,9 @@ const Dashboard = () => {
           
           <button 
             type="submit" 
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
           >
-            <Save className="mr-2" /> Submit Patient Information
+            Submit Patient Information
           </button>
         </form>
       </div>
